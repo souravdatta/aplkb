@@ -24,3 +24,5 @@ Once built run the program by either double clicking or calling the program `apl
 
 Have fun! :-)
 
+![Running on Ubuntu](https://github.com/souravdatta/aplkb/blob/main/APLKB.png?raw=true)
+
