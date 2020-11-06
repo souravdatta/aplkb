@@ -12,6 +12,7 @@ install : bin
 .PHONY : clean
 
 clean :
-	@rm -f aplkb
+	@rm -fr aplkb compiled
+
 
 

@@ -67,7 +67,7 @@
                                      (send the-clipboard set-clipboard-string
                                            (send input-box get-value)
                                            (send e get-time-stamp))
-                                     (send input-box set-value "")
+                                     ;(send input-box set-value "")
                                      (send input-box focus))]))
   (define-values (buttons vpane hpanes)
     (create-paned-buttons editor-pane unicode-symbols 10

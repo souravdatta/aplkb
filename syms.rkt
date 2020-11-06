@@ -2,8 +2,8 @@
 
 (define unicode-symbols
   '("⋄"
-    " ̈"
-    " ̄"
+    "¨"
+    "¯"
     "<"
     "≤"
     "="
