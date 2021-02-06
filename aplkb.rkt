@@ -4,18 +4,34 @@
 (require racket/gui)
 (require racket/draw)
 
+(define alpha '(a b c d e f g h i j k l m n
+                  o p q r s t u v w x y z))
+
+(define symbol-list (for/list ([u unicode-symbols]
+                               [a (for*/list ([a1 alpha]
+                                              [a2 alpha])
+                                    (format "~a~a" a1 a2))])
+                      (cons a u)))
+
+(define (replace-text-with-symbols text)
+  (for/fold ([s text])
+            ([x symbol-list])
+    (string-replace s (car x) (cdr x))))
+
 (define (make-bitmap-sym sym)
-  (let* ([bitmap (make-bitmap 40 40)]
+  (let* ([bitmap (make-bitmap 80 40)]
          [dc (new bitmap-dc% [bitmap bitmap])])
     (send dc set-font (make-font #:size 18 #:weight 'bold))
-    (send dc draw-text sym 10 4)
+    (send dc draw-text (format "~a" (cdr sym)) 16 4)
+    (send dc set-font (make-font #:size 12))
+    (send dc draw-text (format "~a" (car sym)) 60 20)
     bitmap))
 
 (define (make-button parent s callback)
   (new button%
        [parent parent]
        [label (make-bitmap-sym s)]
-       [min-width 40]
+       [min-width 80]
        [min-height 40]
        [callback callback]))
 
@@ -59,6 +75,11 @@
                          [label ""]
                          [style '(multiple hscroll)]
                          [min-height 120]
+                         [callback (λ (txtf c-evt)
+                                     (let ([text (send txtf get-value)])
+                                       (send txtf
+                                             set-value
+                                             (replace-text-with-symbols text))))]
                          [font (make-font #:size 12)]))
   (define do-button (new button%
                          [label "Copy"]
@@ -70,10 +91,12 @@
                                      ;(send input-box set-value "")
                                      (send input-box focus))]))
   (define-values (buttons vpane hpanes)
-    (create-paned-buttons editor-pane unicode-symbols 10
+    (create-paned-buttons editor-pane
+                          symbol-list
+                          10
                           (λ (s)
                             (λ (b e)
-                              (send (send input-box get-editor) insert s)
+                              (send (send input-box get-editor) insert (cdr s))
                               (send input-box focus)))))
   (send input-box focus)
   (send frm show #t))
