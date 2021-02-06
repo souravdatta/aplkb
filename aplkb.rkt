@@ -24,7 +24,7 @@
     (send dc set-font (make-font #:size 18 #:weight 'bold))
     (send dc draw-text (format "~a" (cdr sym)) 16 4)
     (send dc set-font (make-font #:size 12))
-    (send dc draw-text (format "~a" (car sym)) 60 20)
+    (send dc draw-text (format "~a" (car sym)) 56 20)
     bitmap))
 
 (define (make-button parent s callback)
@@ -80,7 +80,7 @@
                                        (send txtf
                                              set-value
                                              (replace-text-with-symbols text))))]
-                         [font (make-font #:size 12)]))
+                         [font (make-font #:size 16)]))
   (define do-button (new button%
                          [label "Copy"]
                          [parent input-pane]
