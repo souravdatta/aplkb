@@ -10,7 +10,7 @@
 (define symbol-list (for/list ([u unicode-symbols]
                                [a (for*/list ([a1 alpha]
                                               [a2 alpha])
-                                    (format "~a~a" a1 a2))])
+                                    (format ".~a~a" a1 a2))])
                       (cons a u)))
 
 (define (replace-text-with-symbols text)
