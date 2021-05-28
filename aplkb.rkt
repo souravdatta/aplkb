@@ -76,10 +76,12 @@
                          [style '(multiple hscroll)]
                          [min-height 120]
                          [callback (λ (txtf c-evt)
-                                     (let ([text (send txtf get-value)])
-                                       (send txtf
-                                             set-value
-                                             (replace-text-with-symbols text))))]
+                                     (let* ([text (send txtf get-value)]
+                                            [replaced-text (replace-text-with-symbols text)])
+                                       (when (not (string=? text replaced-text))
+                                         (send txtf
+                                               set-value
+                                               replaced-text))))]
                          [font (make-font #:size 16)]))
   (define do-button (new button%
                          [label "Copy"]
