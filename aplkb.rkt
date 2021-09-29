@@ -79,10 +79,17 @@
                                      (let* ([text (send txtf get-value)]
                                             [replaced-text (replace-text-with-symbols text)])
                                        (when (not (string=? text replaced-text))
-                                         (send txtf
-                                               set-value
-                                               replaced-text))))]
-                         [font (make-font #:size 16)]))
+                                         (let* ([editor (send txtf get-editor)]
+                                                [pos (send editor
+                                                          get-start-position)])
+                                           (send txtf
+                                                 set-value
+                                                 replaced-text)
+                                           (send editor
+                                                 set-position (if (>= (- pos 2) 0)
+                                                                  (- pos 2)
+                                                                  pos))))))]
+                         [font (make-font #:size 20)]))
   (define do-button (new button%
                          [label "Copy"]
                          [parent input-pane]
